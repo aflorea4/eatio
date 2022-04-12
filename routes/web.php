@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\IngredientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware(['auth:sanctum']);
+Route::get('/ingredients/{ingredient:id}', [IngredientController::class, 'show'])->name('ingredients.show')->middleware(['auth:sanctum']);;
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index')->middleware(['auth:sanctum']);;
+Route::get('/recipes/{recipe:id}', [RecipeController::class, 'show'])->name('recipes.show')->middleware(['auth:sanctum']);;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

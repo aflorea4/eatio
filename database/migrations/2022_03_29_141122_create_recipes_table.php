@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id');
+            $table->foreignId('user_id')->constrained('users', 'id')->nullable()->default(null);
             $table->string('name');
             $table->json('description');
             $table->integer('eta')->nullable()->default(null); // in minutes

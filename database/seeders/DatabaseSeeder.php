@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ingredient;
 use App\Models\User;
+use App\Models\Recipe;
+use App\Models\Ingredient;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,5 +25,12 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(10)->create();
         Ingredient::factory(100)->create();
+        Recipe::factory(25)->create();
+
+        $ingredients = Ingredient::select(['id'])->orderBy('id', 'DESC')->take(5)->get();
+        $recipes = Recipe::all();
+        foreach ($recipes as $recipe) {
+            $recipe->ingredients()->syncWithoutDetaching($ingredients);
+        }
     }
 }

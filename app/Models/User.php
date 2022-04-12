@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Recipe;
 use App\Models\Ingredient;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -66,5 +67,13 @@ class User extends Authenticatable
     public function ingredients()
     {
         return $this->hasMany(Ingredient::class);
+    }
+
+    /**
+     * Get the ingredients associated with the user.
+     */
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
     }
 }
