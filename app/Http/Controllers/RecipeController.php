@@ -9,7 +9,7 @@ class RecipeController extends Controller
 {
     public function index(Request $request)
     {
-        return $request->user()->recipes() ?? [];
+        return $request->user()->recipes ?? [];
     }
 
     public function show(Recipe $recipe)

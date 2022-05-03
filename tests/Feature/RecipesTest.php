@@ -18,7 +18,10 @@ class RecipesTest extends TestCase
      */
     public function test_recipes_index_page_can_be_accessed()
     {
-        $this->actingAs($user = User::factory()->create());
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
         $response = $this->get('/recipes');
 
         $response->assertStatus(200);
