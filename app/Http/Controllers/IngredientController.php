@@ -17,11 +17,17 @@ class IngredientController extends Controller
 
     public function show(Ingredient $ingredient)
     {
-        return $ingredient;
+        $this->authorize('view', $ingredient);
+        return Inertia::render('Ingredients/Show', [
+            'ingredient' => $ingredient->load([
+                'recipes',
+            ]),
+        ]);
     }
 
     public function update(Request $request, Ingredient $ingredient)
     {
+        $this->authorize('update', $ingredient);
         $ingredient->update($request->validate([
             'name' => 'required',
             'quantity' => 'required|numeric',
@@ -32,6 +38,10 @@ class IngredientController extends Controller
 
     public function destroy(Request $request, Ingredient $ingredient)
     {
+        $this->authorize('delete', $ingredient);
+        if ($ingredient->recipes() != null) {
+            $ingredient->recipes()->detach($ingredient->recipes->pluck('id'));
+        }
         $ingredient->delete();
 
         return redirect()->route('ingredients.index');

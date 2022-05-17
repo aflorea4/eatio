@@ -303,6 +303,7 @@ export default defineComponent({
             this.editForm.quantity = ingredient.quantity;
         },
         saveIngredient() {
+            this.editForm.id == null;
             this.editForm.post(route("ingredients.update", this.editForm.id));
         },
         deleteIngredient(id) {
